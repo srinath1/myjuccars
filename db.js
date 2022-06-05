@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 function connectDB(){
 
-    mongoose.connect('mongodb+srv://sathya:sathyapr@cluster0.dkuc0.mongodb.net/sheycars-udemy' , {useUnifiedTopology: true , useNewUrlParser: true})
+    const URL="mongodb+srv://nasa:nasa@graphqlnode.z5vfw.mongodb.net/JucCars?retryWrites=true&w=majority"
+
 
     const connection = mongoose.connection
 
