@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {Route , BrowserRouter , Redirect} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -14,22 +14,20 @@ import EditCar from './pages/EditCar';
 function App() {
   return (
     <div className="App">
-
-         
-         
-         <BrowserRouter>
+      <BrowserRouter>
+        <Routes>
              
-             <ProtectedRoute path='/' exact component={Home} />
-             <Route path='/login' exact component={Login} />
-             <Route path='/register' exact component={Register} />
-             <ProtectedRoute path='/booking/:carid' exact component={BookingCar} />
-             <ProtectedRoute path='/userbookings' exact component={UserBookings} />
-             <ProtectedRoute path='/addcar' exact component={AddCar} />
-             <ProtectedRoute path='/editcar/:carid' exact component={EditCar} />
-             <ProtectedRoute path='/admin' exact component={AdminHome} />
+             <Route path='/' exact element={<ProtectedRoute><Home /></ProtectedRoute>} />
+             <Route path='/login' exact element={<Login/>} />
+             <Route path='/register' exact element={<Register/>} />
+             <Route path='/booking/:carid' exact element={<ProtectedRoute><BookingCar /></ProtectedRoute>} />
+             <Route path='/userbookings' exact element={<ProtectedRoute><UserBookings /></ProtectedRoute>} />
+             <Route path='/addcar' exact element={<ProtectedRoute><AddCar /></ProtectedRoute>} />
+             <Route path='/editcar/:carid' exact element={<ProtectedRoute><EditCar /></ProtectedRoute>} />
+             <Route path='/admin' exact element={<ProtectedRoute><AdminHome /></ProtectedRoute>} />
          
-         </BrowserRouter>
-
+             </Routes>
+      </BrowserRouter>
     </div>
   );
 }
@@ -39,16 +37,14 @@ function App() {
 export default App;
 
 
-export function ProtectedRoute(props)
-{
+export function ProtectedRoute({children}){
 
-
-    if(localStorage.getItem('user'))
-    {
-      return <Route {...props}/>
-    }
-    else{
-      return <Redirect to='/login'/>
-    }
+  if(localStorage.getItem('user'))
+  {
+    return children
+  }
+  else{
+    return <Navigate to='/login' />
+  }
 
 }
