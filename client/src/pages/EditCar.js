@@ -4,18 +4,22 @@ import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import Spinner from "../components/Spinner";
 import { addCar, editCar, getAllCars } from "../redux/actions/carsActions";
-function EditCar({ match }) {
+import { useParams } from "react-router-dom";
+
+function EditCar() {
   const { cars } = useSelector((state) => state.carsReducer);
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alertsReducer);
   const [car, setcar] = useState();
   const [totalcars, settotalcars] = useState([]);
+  let { carid } = useParams();
+
   useEffect(() => {
     if (cars.length == 0) {
       dispatch(getAllCars());
     } else {
       settotalcars(cars);
-      setcar(cars.find((o) => o._id == match.params.carid));
+      setcar(cars.find((o) => o._id == carid));
       console.log(car);
     }
   }, [cars]);
